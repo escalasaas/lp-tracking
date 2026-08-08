@@ -1,0 +1,15 @@
+{
+  "name": "@escalasaas/tracking",
+  "version": "0.1.0",
+  "description": "Funnel, form-friction and experiment tracking shared by every EscalaSaaS landing page.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "type-check": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": { "typescript": "^5.6.0" }
+}
