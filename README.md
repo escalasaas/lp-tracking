@@ -36,3 +36,14 @@ diferença entre um modelo de dados e uma vulnerabilidade.
 mesma ordem existe no lado da API (`sqlAbandonFrictionField`). Se as duas
 divergirem, o campo de fricção é atribuído errado — e o relatório mente
 exatamente onde ele deveria explicar.
+
+## Por que `dist/` está versionado
+
+O pacote é instalado por URL do Git, e nesse caminho o npm depende do script
+`prepare` para compilar no momento da instalação. Ambientes que bloqueiam
+scripts de ciclo de vida — o padrão em várias versões do npm e comum em CI —
+instalam o pacote sem `dist`, e o build do site quebra com um erro que não diz
+o que aconteceu.
+
+Versionar a saída troca esse problema por outro menor: lembrar de rodar
+`npm run build` antes de publicar uma tag.
