@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/escalasaas/tracking.git"
+    "url": "git+https://github.com/escalasaas/lp-tracking.git"
   },
   "license": "UNLICENSED",
   "publishConfig": {
