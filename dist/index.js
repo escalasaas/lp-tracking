@@ -14,3 +14,4 @@ export { getSessionId } from "./sessionId";
 export { getUtmParams, getAdId } from "./utmParams";
 export { analyticsFormId, classifyFormError, classifyAllFormErrors, controlHasValue, fieldIdFromElement, formStepProps, resolveFrictionField, FORM_FIELD_ORDER, } from "./formTracking";
 export { trackPageEvent, trackCtaClick, initPageEvents } from "./pageEvents";
+export { trackCtaFromElement } from "./ctaFromElement";

@@ -17,3 +17,4 @@ export { analyticsFormId, classifyFormError, classifyAllFormErrors, controlHasVa
 export type { FormErrorType, ClassifiedFormError } from "./formTracking";
 export { trackPageEvent, trackCtaClick, initPageEvents } from "./pageEvents";
 export type { PageEventName, CtaLocation, CtaType, CtaDestination, } from "./pageEvents";
+export { trackCtaFromElement } from "./ctaFromElement";

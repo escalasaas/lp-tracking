@@ -34,3 +34,4 @@ export type {
   CtaType,
   CtaDestination,
 } from "./pageEvents";
+export { trackCtaFromElement } from "./ctaFromElement";
