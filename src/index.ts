@@ -35,3 +35,20 @@ export type {
   CtaDestination,
 } from "./pageEvents";
 export { trackCtaFromElement } from "./ctaFromElement";
+
+import { initCtaTracking } from "./ctaFromElement";
+import { initPageEvents } from "./pageEvents";
+
+export { initCtaTracking };
+
+/**
+ * Liga tudo o que uma landing page precisa: o page_view e o registro de
+ * cliques em CTA.
+ *
+ * Existe para a LP ter uma linha só. Chamar as duas separadamente funciona
+ * igual — e é o que fazer quando uma página quiser o page_view sem o resto.
+ */
+export function initTracking(): void {
+  initPageEvents();
+  initCtaTracking();
+}
