@@ -8,15 +8,15 @@
  * have been ten fixes, applied unevenly, leaving the sites' reports no longer
  * comparable with one another.
  */
-export { configureTracking, getTrackingConfig } from "./config";
-export { getVisitorId } from "./visitorId";
-export { getSessionId } from "./sessionId";
-export { getUtmParams, getAdId } from "./utmParams";
-export { analyticsFormId, classifyFormError, classifyAllFormErrors, controlHasValue, fieldIdFromElement, formStepProps, resolveFrictionField, FORM_FIELD_ORDER, } from "./formTracking";
-export { trackPageEvent, trackCtaClick, initPageEvents } from "./pageEvents";
-export { trackCtaFromElement } from "./ctaFromElement";
-import { initCtaTracking } from "./ctaFromElement";
-import { initPageEvents } from "./pageEvents";
+export { configureTracking, getTrackingConfig } from "./config.js";
+export { getVisitorId } from "./visitorId.js";
+export { getSessionId } from "./sessionId.js";
+export { getUtmParams, getAdId } from "./utmParams.js";
+export { analyticsFormId, classifyFormError, classifyAllFormErrors, controlHasValue, fieldIdFromElement, formStepProps, resolveFrictionField, FORM_FIELD_ORDER, } from "./formTracking.js";
+export { trackPageEvent, trackCtaClick, initPageEvents } from "./pageEvents.js";
+export { trackCtaFromElement } from "./ctaFromElement.js";
+import { initCtaTracking } from "./ctaFromElement.js";
+import { initPageEvents } from "./pageEvents.js";
 export { initCtaTracking };
 /**
  * Liga tudo o que uma landing page precisa: o page_view e o registro de

@@ -8,12 +8,12 @@
  * have been ten fixes, applied unevenly, leaving the sites' reports no longer
  * comparable with one another.
  */
-export { configureTracking, getTrackingConfig } from "./config";
-export type { TrackingConfig } from "./config";
+export { configureTracking, getTrackingConfig } from "./config.js";
+export type { TrackingConfig } from "./config.js";
 
-export { getVisitorId } from "./visitorId";
-export { getSessionId } from "./sessionId";
-export { getUtmParams, getAdId } from "./utmParams";
+export { getVisitorId } from "./visitorId.js";
+export { getSessionId } from "./sessionId.js";
+export { getUtmParams, getAdId } from "./utmParams.js";
 
 export {
   analyticsFormId,
@@ -24,20 +24,20 @@ export {
   formStepProps,
   resolveFrictionField,
   FORM_FIELD_ORDER,
-} from "./formTracking";
-export type { FormErrorType, ClassifiedFormError } from "./formTracking";
+} from "./formTracking.js";
+export type { FormErrorType, ClassifiedFormError } from "./formTracking.js";
 
-export { trackPageEvent, trackCtaClick, initPageEvents } from "./pageEvents";
+export { trackPageEvent, trackCtaClick, initPageEvents } from "./pageEvents.js";
 export type {
   PageEventName,
   CtaLocation,
   CtaType,
   CtaDestination,
-} from "./pageEvents";
-export { trackCtaFromElement } from "./ctaFromElement";
+} from "./pageEvents.js";
+export { trackCtaFromElement } from "./ctaFromElement.js";
 
-import { initCtaTracking } from "./ctaFromElement";
-import { initPageEvents } from "./pageEvents";
+import { initCtaTracking } from "./ctaFromElement.js";
+import { initPageEvents } from "./pageEvents.js";
 
 export { initCtaTracking };
 

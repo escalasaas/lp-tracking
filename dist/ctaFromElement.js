@@ -1,4 +1,4 @@
-import { trackCtaClick } from "./pageEvents";
+import { trackCtaClick } from "./pageEvents.js";
 /**
  * Derives a CTA event from the clicked element instead of asking every call
  * site to describe itself.
@@ -140,13 +140,6 @@ function idFrom(el, location, text, section, index) {
     return parts.join("-");
 }
 /**
- * Call from the shared button component's onClick.
- *
- * Never throws and never blocks: a CTA that fails to report must still
- * navigate. `data-cta-id` on the element overrides the derived id, for the
- * rare button whose text changes but whose identity should not.
- */
-/**
  * Ouve o clique no documento inteiro, em vez de exigir uma alteração no
  * componente de botão de cada landing page.
  *
@@ -174,6 +167,13 @@ export function initCtaTracking() {
     // Captura: um handler que interrompe a propagação não deve apagar o registro.
     true);
 }
+/**
+ * Registra um clique a partir do elemento. Público para o caso raro de uma
+ * página querer marcar algo que o filtro do ouvinte não pega.
+ *
+ * Nunca lança e nunca bloqueia: um CTA que falha em reportar ainda tem que
+ * navegar. `data-cta-id` no elemento sobrescreve o id derivado.
+ */
 export function trackCtaFromElement(el) {
     try {
         const href = el.getAttribute("href");

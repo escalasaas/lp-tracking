@@ -3,10 +3,10 @@
 // Central entry: trackPageEvent / trackCtaClick. Context (visitor, session,
 // UTMs, device, experiments, page_version) is attached here so call sites only
 // pass event-specific properties — never PII.
-import { getSessionId } from "./sessionId";
-import { getAdId, getUtmParams } from "./utmParams";
-import { getVisitorId } from "./visitorId";
-import { getTrackingConfig } from "./config";
+import { getSessionId } from "./sessionId.js";
+import { getAdId, getUtmParams } from "./utmParams.js";
+import { getVisitorId } from "./visitorId.js";
+import { getTrackingConfig } from "./config.js";
 function deviceType() {
     if (matchMedia("(max-width: 768px)").matches) {
         return "mobile";

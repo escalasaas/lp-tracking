@@ -8,17 +8,17 @@
  * have been ten fixes, applied unevenly, leaving the sites' reports no longer
  * comparable with one another.
  */
-export { configureTracking, getTrackingConfig } from "./config";
-export type { TrackingConfig } from "./config";
-export { getVisitorId } from "./visitorId";
-export { getSessionId } from "./sessionId";
-export { getUtmParams, getAdId } from "./utmParams";
-export { analyticsFormId, classifyFormError, classifyAllFormErrors, controlHasValue, fieldIdFromElement, formStepProps, resolveFrictionField, FORM_FIELD_ORDER, } from "./formTracking";
-export type { FormErrorType, ClassifiedFormError } from "./formTracking";
-export { trackPageEvent, trackCtaClick, initPageEvents } from "./pageEvents";
-export type { PageEventName, CtaLocation, CtaType, CtaDestination, } from "./pageEvents";
-export { trackCtaFromElement } from "./ctaFromElement";
-import { initCtaTracking } from "./ctaFromElement";
+export { configureTracking, getTrackingConfig } from "./config.js";
+export type { TrackingConfig } from "./config.js";
+export { getVisitorId } from "./visitorId.js";
+export { getSessionId } from "./sessionId.js";
+export { getUtmParams, getAdId } from "./utmParams.js";
+export { analyticsFormId, classifyFormError, classifyAllFormErrors, controlHasValue, fieldIdFromElement, formStepProps, resolveFrictionField, FORM_FIELD_ORDER, } from "./formTracking.js";
+export type { FormErrorType, ClassifiedFormError } from "./formTracking.js";
+export { trackPageEvent, trackCtaClick, initPageEvents } from "./pageEvents.js";
+export type { PageEventName, CtaLocation, CtaType, CtaDestination, } from "./pageEvents.js";
+export { trackCtaFromElement } from "./ctaFromElement.js";
+import { initCtaTracking } from "./ctaFromElement.js";
 export { initCtaTracking };
 /**
  * Liga tudo o que uma landing page precisa: o page_view e o registro de

@@ -1,11 +1,4 @@
 /**
- * Call from the shared button component's onClick.
- *
- * Never throws and never blocks: a CTA that fails to report must still
- * navigate. `data-cta-id` on the element overrides the derived id, for the
- * rare button whose text changes but whose identity should not.
- */
-/**
  * Ouve o clique no documento inteiro, em vez de exigir uma alteração no
  * componente de botão de cada landing page.
  *
@@ -20,4 +13,11 @@
  * `submit`, e encheriam o relatório de cliques que não são intenção de compra.
  */
 export declare function initCtaTracking(): void;
+/**
+ * Registra um clique a partir do elemento. Público para o caso raro de uma
+ * página querer marcar algo que o filtro do ouvinte não pega.
+ *
+ * Nunca lança e nunca bloqueia: um CTA que falha em reportar ainda tem que
+ * navegar. `data-cta-id` no elemento sobrescreve o id derivado.
+ */
 export declare function trackCtaFromElement(el: HTMLElement): void;
