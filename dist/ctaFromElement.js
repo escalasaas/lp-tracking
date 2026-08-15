@@ -40,18 +40,30 @@ const LOCATION_BY_SECTION = [
     ["contato", "final"],
     ["cta", "final"],
 ];
-function locationOf(el) {
+/** The section a CTA sits in, and where it falls in the page. */
+function sectionOf(el) {
+    const section = el.closest("section");
+    if (!section)
+        return { section: null, index: -1 };
+    const all = Array.from(document.querySelectorAll("section"));
+    return { section, index: all.indexOf(section) };
+}
+function locationOf(el, section, index) {
     if (el.closest("header"))
         return "header";
     if (el.closest("[data-cta-floating]"))
         return "floating";
-    const section = el.closest("section[id], [id]");
     const id = (section?.id ?? "").toLowerCase();
     for (const [test, location] of LOCATION_BY_SECTION) {
         if (id.includes(test))
             return location;
     }
-    // Unknown section: "middle" is the honest bucket — it says "somewhere in the
+    // No id to go by. The first section of a landing page is the hero in every
+    // template we ship, and calling the hero CTA "middle" would bury the single
+    // most important button in the report.
+    if (index === 0)
+        return "hero";
+    // "middle" is the honest bucket for the rest: it says "somewhere in the
     // body", which is true, instead of inventing a section that does not exist.
     return "middle";
 }
@@ -81,16 +93,37 @@ function typeOf(destination, isPrimary) {
         return "form_anchor";
     return isPrimary ? "primary" : "secondary";
 }
-/** Short, stable and readable in a report: `hero-quero-meu-diagnostico`. */
-function idFrom(location, text) {
-    const slug = text
+function slugify(text) {
+    return text
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "")
         .slice(0, 40);
-    return slug ? `${location}-${slug}` : location;
+}
+/**
+ * Short, readable in a report, and \u2014 the part that matters \u2014 different for
+ * each button.
+ *
+ * A page usually repeats the same CTA text five or six times down the page. If
+ * the id were only location plus text, all of them would collapse into one row
+ * and the report could not say which position converts, which is the one
+ * question the CTA table exists to answer.
+ *
+ * The section's own id is the stable discriminator. Where there is none, the
+ * section's position stands in: it is stable while the page's structure is,
+ * and giving the section an id upgrades it without changing anything else.
+ */
+function idFrom(location, text, section, index) {
+    const parts = [location];
+    const sectionID = section?.id ?? "";
+    if (!sectionID && index > 0)
+        parts.push(`s${index + 1}`);
+    const slug = slugify(text);
+    if (slug)
+        parts.push(slug);
+    return parts.join("-");
 }
 /**
  * Call from the shared button component's onClick.
@@ -104,13 +137,14 @@ export function trackCtaFromElement(el) {
         const href = el.getAttribute("href");
         const isSubmit = el.tagName === "BUTTON" && el.getAttribute("type") === "submit";
         const text = (el.textContent ?? "").trim().replace(/\s+/g, " ").slice(0, 80);
-        const location = locationOf(el);
+        const { section, index } = sectionOf(el);
+        const location = locationOf(el, section, index);
         const destination = destinationOf(href, isSubmit);
         // The template's primary variant is the only one painted in the action
         // colour, which is what "primary" means in the report.
         const isPrimary = el.className.includes("bg-brand");
         trackCtaClick({
-            cta_id: el.dataset.ctaId || idFrom(location, text),
+            cta_id: el.dataset.ctaId || idFrom(location, text, section, index),
             cta_location: location,
             cta_text: text,
             cta_type: typeOf(destination, isPrimary),
