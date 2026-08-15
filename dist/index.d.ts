@@ -28,3 +28,4 @@ export { initCtaTracking };
  * igual — e é o que fazer quando uma página quiser o page_view sem o resto.
  */
 export declare function initTracking(): void;
+export { attachFormTracking, trackFormAttempt, trackFormError, trackFormSuccess, trackFormSubmitError, } from "./attachForm.js";

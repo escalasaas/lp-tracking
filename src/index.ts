@@ -52,3 +52,11 @@ export function initTracking(): void {
   initPageEvents();
   initCtaTracking();
 }
+
+export {
+  attachFormTracking,
+  trackFormAttempt,
+  trackFormError,
+  trackFormSuccess,
+  trackFormSubmitError,
+} from "./attachForm.js";
