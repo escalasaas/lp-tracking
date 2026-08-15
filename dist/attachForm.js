@@ -94,8 +94,26 @@ export function trackFormAttempt(form, formId) {
  * O nome do campo é o ponto: sem ele o relatório de fricção mostra
  * "sem_dados" para todo mundo, que é uma coluna inteira sem informação
  * nenhuma parecendo um resultado.
+ *
+ * `campos` é para o formulário que valida em estado do React e marca
+ * `noValidate`: ali o DOM não tem `:invalid` para ler, e sem a lista explícita
+ * o evento sairia dizendo "unknown" — que é o mesmo buraco com outro nome.
+ * Quem valida por conta própria sabe o motivo, então passa o par.
  */
-export function trackFormError(form, formId) {
+export function trackFormError(form, formId, campos) {
+    const primeiro = campos?.[0];
+    if (campos && primeiro) {
+        trackPageEvent("form_error", {
+            form_id: formId,
+            field_name: primeiro.field_name,
+            error_type: primeiro.error_type,
+            invalid_fields: campos,
+            missing_fields: campos
+                .filter((campo) => campo.error_type === "required")
+                .map((campo) => campo.field_name),
+        });
+        return;
+    }
     const { primary, invalid_fields, missing_fields } = classifyAllFormErrors(form);
     trackPageEvent("form_error", {
         form_id: formId,
