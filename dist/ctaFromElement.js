@@ -53,6 +53,10 @@ function locationOf(el, section, index) {
         return "header";
     if (el.closest("[data-cta-floating]"))
         return "floating";
+    // The mobile menu lives outside every section, in a panel of its own. Without
+    // this it falls through to "middle" and the menu CTA is filed as a body CTA.
+    if (el.closest('[id*="menu" i], [data-menu-panel]'))
+        return "menu";
     const id = (section?.id ?? "").toLowerCase();
     for (const [test, location] of LOCATION_BY_SECTION) {
         if (id.includes(test))
@@ -115,11 +119,21 @@ function slugify(text) {
  * section's position stands in: it is stable while the page's structure is,
  * and giving the section an id upgrades it without changing anything else.
  */
-function idFrom(location, text, section, index) {
+function idFrom(el, location, text, section, index) {
     const parts = [location];
     const sectionID = section?.id ?? "";
     if (!sectionID && index > 0)
         parts.push(`s${index + 1}`);
+    // Two buttons with the same text inside the same section still have to be
+    // told apart, or the report merges them and their two positions become one
+    // number. Position among the section's links is deterministic, so the same
+    // button keeps the same id between loads.
+    if (section) {
+        const peers = Array.from(section.querySelectorAll("a, button"));
+        const nth = peers.filter((peer) => (peer.textContent ?? "").trim() === (el.textContent ?? "").trim());
+        if (nth.length > 1)
+            parts.push(String(nth.indexOf(el) + 1));
+    }
     const slug = slugify(text);
     if (slug)
         parts.push(slug);
@@ -144,7 +158,7 @@ export function trackCtaFromElement(el) {
         // colour, which is what "primary" means in the report.
         const isPrimary = el.className.includes("bg-brand");
         trackCtaClick({
-            cta_id: el.dataset.ctaId || idFrom(location, text, section, index),
+            cta_id: el.dataset.ctaId || idFrom(el, location, text, section, index),
             cta_location: location,
             cta_text: text,
             cta_type: typeOf(destination, isPrimary),
