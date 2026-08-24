@@ -27,6 +27,19 @@ export type TrackingConfig = {
   releaseSha: string;
   /** Extra properties attached to every event. */
   defaultProperties: Record<string, unknown>;
+  /**
+   * Chamado depois de cada evento nosso, com o mesmo nome e propriedades.
+   *
+   * Existe para espelhar os eventos numa ferramenta de terceiro — o PostHog do
+   * cliente, o GA de outro — sem que a página passe a chamar as duas coisas em
+   * cada botão. Duplicar a chamada por botão é o começo do drift: um dos dois
+   * lados deixa de ser atualizado e os relatórios param de bater.
+   *
+   * Nunca recebe o que identifica a pessoa: só o que já vai para a nossa API.
+   * O que ele faz com isso é problema dele; erro aqui é engolido, porque um
+   * espelho quebrado não pode derrubar a medição que é nossa.
+   */
+  onEvent?: (name: string, properties: Record<string, unknown>) => void;
 };
 
 const config: TrackingConfig = {

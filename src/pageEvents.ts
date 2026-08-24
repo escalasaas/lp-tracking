@@ -213,6 +213,25 @@ export function trackPageEvent(
     [{ name, ...(properties ? { properties } : {}) }],
     experiment,
   );
+  espelhar(name, properties ?? {});
+}
+
+/**
+ * Repassa o evento ao espelho configurado, se houver.
+ *
+ * Depois do envio nosso e nunca antes: o espelho é de terceiro, e um script que
+ * demora ou lança não pode atrasar nem impedir a medição que sustenta os
+ * relatórios. Por isso também o try/catch — o pior caso é o espelho perder um
+ * evento, não a página perder todos.
+ */
+function espelhar(name: string, properties: Record<string, unknown>): void {
+  const { onEvent } = getTrackingConfig();
+  if (!onEvent) return;
+  try {
+    onEvent(name, properties);
+  } catch {
+    // ignorado de propósito: ver acima
+  }
 }
 
 /**
